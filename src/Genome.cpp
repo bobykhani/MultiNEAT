@@ -665,7 +665,7 @@ namespace NEAT
             }
         }
 
-        return -1;
+        return 1;
     }
 
     // A little helper function to find the index of a link, given its innovation ID
