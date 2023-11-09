@@ -664,8 +664,8 @@ namespace NEAT
                 return i;
             }
         }
-
-        return 1;
+        std::cout<<"print -1 returned as index\n";
+        return -1;
     }
 
     // A little helper function to find the index of a link, given its innovation ID
@@ -864,8 +864,17 @@ namespace NEAT
         {
             Connection t_c;
 
-            t_c.m_source_neuron_idx = GetNeuronIndex(m_LinkGenes[i].FromNeuronID());
-            t_c.m_target_neuron_idx = GetNeuronIndex(m_LinkGenes[i].ToNeuronID());
+            int sourceIndex = GetNeuronIndex(m_LinkGenes[i].FromNeuronID());
+            int targetIndex = GetNeuronIndex(m_LinkGenes[i].ToNeuronID());
+
+            // Check if either the source or target neuron index is invalid
+            if (sourceIndex == -1 || targetIndex == -1) {
+                std::cerr << "Invalid neuron index found for link. Skipping this link.\n";
+                continue; // Skip this link as it is invalid
+            }
+
+            t_c.m_source_neuron_idx = sourceIndex;
+            t_c.m_target_neuron_idx = targetIndex;
             t_c.m_weight = m_LinkGenes[i].GetWeight();
             t_c.m_recur_flag = m_LinkGenes[i].IsRecurrent();
 
